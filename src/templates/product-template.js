@@ -16,7 +16,7 @@ const ProductTemplate = ({ data: {contentfulGatsbyGarbProduct}, location }) => (
       {/* Product Info */}
       <h2>{contentfulGatsbyGarbProduct.name} - <span style={{color: '#ccc'}}
       >Added on {contentfulGatsbyGarbProduct.createdAt}</span></h2>
-      <h4>{contentfulGatsbyGarbProduct.price}</h4>
+      <h4>${contentfulGatsbyGarbProduct.price}</h4>
       <p>{contentfulGatsbyGarbProduct.description}</p>
       <button
         style={{
