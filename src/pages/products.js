@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
+import netlifyIdentity from 'netlify-identity-widget';
 
 import Layout from '../components/layout';
 
 
-const products = ({ data: { allContentfulGatsbyGarbProduct }}) => { 
+class Products extends Component {
+  state = {
+    products: []
+  };
+
+  componentDidMount() {
+    this.getProducts();
+    netlifyIdentity.on('login', user => this.getProducts(user));
+    netlifyIdentity.on('logout', () => this.getProducts());
+  }
+
+  getProducts = user => {
+    const allProducts = this.props.data.allContentfulGatsbyGarbProduct.edges;
+    const products = netlifyIdentity.currentUser() !== null ?
+      allProducts : allProducts.filter(({ node: product }) => !product.private );
+    this.setState({ products });
+  };
+
+  render() {
+    // const { data: { allContentfulGatsbyGarbProduct }} = this.props;
+    const { products } = this.state;
+
   return (
     <Layout>
       <div>
         <h2>Garb Products</h2>
         {/* Product List */}
-        {allContentfulGatsbyGarbProduct.edges.map (({ node: product }) => (
+        {products.map (({ node: product }) => (
           <div
             style={{ marginBottom: 20 }}
             key={product.id}
@@ -35,6 +57,7 @@ const products = ({ data: { allContentfulGatsbyGarbProduct }}) => {
     </Layout>
   );
 };
+}
 
 export const query = graphql`
 {
@@ -45,6 +68,7 @@ export const query = graphql`
         slug
         name
         price
+        private
         image {
           fluid(maxWidth: 400) {
             ...GatsbyContentfulFluid_tracedSVG
@@ -55,4 +79,4 @@ export const query = graphql`
   }
 }
 `
-export default products;
+export default Products;
