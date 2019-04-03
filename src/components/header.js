@@ -1,7 +1,9 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React from "react"
+import React, { Component } from "react"
 import gatsbyLogo from '../images/gatsby-icon.png';
+import netlifyIdentity from 'netlify-identity-widget';
+// import { renderPlaygroundPage } from "graphql-playground-html";
 
 const isActive=({ isCurrent }) => {
   return { className: isCurrent ? 'active' : 'navlink' }
@@ -9,7 +11,15 @@ const isActive=({ isCurrent }) => {
 
 const NavLink = props => <Link getProps={isActive} {...props} />
 
-const Header = ({ siteTitle }) => (
+class Header extends Component {
+  componentDidMount() {
+    netlifyIdentity.init();
+  }
+
+  render() {
+    const { siteTitle } = this.props;
+
+  return (
   <header
     style={{
       background: `rebeccapurple`,
@@ -48,6 +58,8 @@ const Header = ({ siteTitle }) => (
 
       <NavLink to="/products">Store</NavLink>
 
+      <div data-netlify-identity-menu />
+
       {/* Shopping Cart Summary */}
       <div
         style={{
@@ -79,7 +91,7 @@ const Header = ({ siteTitle }) => (
       </div>
     </div>
   </header>
-)
+)}}
 
 Header.propTypes = {
   siteTitle: PropTypes.string,

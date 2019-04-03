@@ -635,3 +635,14 @@ pre tt:after {
   color: white;
   text-decoration: none;
 }
+
+/* Netlify Identity */
+.netlify-identity-menu {
+  list-style: none;
+  color: white;
+  margin: 0;
+}
+
+.netlify-identity-signup, .netlify-identity-login, .netlify-identity-logout  {
+  color: white;
+}
