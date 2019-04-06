@@ -86,7 +86,7 @@ class Header extends Component {
           ></span>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '75%' }}>*Click to return to cart*</span>
+          <span style={{ fontSize: '75%' }}>*Click to access cart*</span>
         </div>
       </div>
     </div>
